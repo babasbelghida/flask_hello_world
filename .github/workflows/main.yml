@@ -26,7 +26,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd $HOME/www/
-            git clone https://github.com/OpenRSI/flask_hello_world.git
+            git clone https://github.com/babasbelghida/flask_hello_world.git
             # Vérifier si le répertoire de destination existe
             if [ "$(ls -A ./flask)" ]; then
               rsync -r ./flask_hello_world/ ./flask
