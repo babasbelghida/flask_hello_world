@@ -11,17 +11,36 @@ def hello_world():
 def monfr():
     return "<h2>Bonjour tout le monde !</h2>"
 
+from flask import Flask, jsonify
+from urllib.request import urlopen
+import json
+
+app = Flask(__name__)
+
 @app.route('/paris/')
 def meteo():
-    response = urlopen('https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris,fr&cnt=16&appid=bd5e378503939ddaee76f12ad7a97608')
-    raw_content = response.read()
-    json_content = json.loads(raw_content.decode('utf-8'))
-    results = []
-    for list_element in json_content.get('list', []):
-        dt_value = list_element.get('dt')
-        temp_day_value = list_element.get('temp', {}).get('day') - 273.15 # Conversion de Kelvin en °c 
-        results.append({'Jour': dt_value, 'temp': temp_day_value})
-    return jsonify(results=results)
+    api_key = 'bd5e378503939ddaee76f12ad7a97608'
+    url = 'https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris,fr&cnt=16&appid=' + api_key
+
+    try:
+        response = urlopen(url)
+        raw_content = response.read()
+        json_content = json.loads(raw_content.decode('utf-8'))
+
+        results = []
+        for list_element in json_content.get('list', []):
+            dt_value = list_element.get('dt')
+            temp_day_value = list_element.get('temp', {}).get('day') - 273.15  # Conversion de Kelvin en °C 
+            results.append({'Jour': dt_value, 'temp': temp_day_value})
+
+        return jsonify(results=results)
+
+    except Exception as e:
+        return jsonify(error=str(e))
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 
 @app.route('/fiche_client/<int:post_id>')
