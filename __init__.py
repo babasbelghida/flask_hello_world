@@ -1,10 +1,12 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 
 import sqlite3
+app = Flask(__name__)                                                                                                                  
+                                                                                                                                       
+@app.route('/')
+def hello_world():
+    return render_template('hello.html')
 
-app = Flask(__name__)
-
-# ...
 
 @app.route('/fiche_client/<int:post_id>')
 def Readfiche(post_id):
