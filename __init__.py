@@ -41,7 +41,9 @@ def mongraphique():
 
 @app.route("/histogramme/")
 def monhistogramme():
-    return render_template("histogramme.html")
+  
+    
+    return render_template('histogramme.html')
 
 @app.route('/fiche_client/<int:post_id>')
 def Readfiche(post_id):
