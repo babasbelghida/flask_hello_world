@@ -45,6 +45,11 @@ def monhistogramme():
     
     return render_template('histogramme.html')
 
+from flask import Flask, render_template
+import sqlite3
+
+app = Flask(__name__)
+
 @app.route('/fiche_client/<int:post_id>')
 def Readfiche(post_id):
     conn = sqlite3.connect('database.db')
@@ -55,6 +60,20 @@ def Readfiche(post_id):
 
     # Rendre le template HTML et transmettre les données
     return render_template('read_data.html', data=data)
+
+@app.route('/recherche_fiche_client/<string:name>')
+def recherche_fiche_client(name):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM clients WHERE name = ?', (name,))
+    data = cursor.fetchall()
+    conn.close()
+
+    # Rendre le template HTML et transmettre les données
+    return render_template('search_data.html', data=data)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('/recherche_fiche_client/<string:name>')
 def Readfichesearch(name):
