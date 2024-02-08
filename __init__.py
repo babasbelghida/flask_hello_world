@@ -46,11 +46,6 @@ def mongraphique():
 def monhistogramme():
     return render_template("histogramme.html")
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
-
 @app.route('/fiche_client/<int:post_id>')
 def Readfiche(post_id):
     conn = sqlite3.connect('database.db')
