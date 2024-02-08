@@ -77,8 +77,8 @@ def Searchfile(name):
     
     # Rendre le template HTML et transmettre les données
     return render_template('read_data.html', data=data)
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#    app.run(debug=True)
 
 
 @app.route('/recherche_fiche_client/<string:name>')
@@ -92,8 +92,8 @@ def recherche_fiche_client(name):
     # Rendre le template HTML et transmettre les données
     return render_template('search_data.html', data=data)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#if __name__ == '__main__':
+#    app.run(debug=True)
 
 @app.route('/recherche_fiche_client/<string:name>')
 def Readfichesearch(name):
