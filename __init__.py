@@ -1,6 +1,9 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for
-
+from flask import Flask, jsonify
+from urllib.request import urlopen
+import json
 import sqlite3
+
 app = Flask(__name__)                                                                                                                  
                                                                                                                                        
 @app.route('/')
@@ -10,12 +13,6 @@ def hello_world():
 @app.route("/fr/")
 def monfr():
     return "<h2>Bonjour tout le monde !</h2>"
-
-from flask import Flask, jsonify
-from urllib.request import urlopen
-import json
-
-app = Flask(__name__)
 
 @app.route('/paris/')
 def meteo():
