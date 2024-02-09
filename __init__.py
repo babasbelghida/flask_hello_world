@@ -47,6 +47,11 @@ def meteo():
 @app.route("/fr/")
 def monfr():
     return "<h2>Bonjour tout le monde !</h2>"
+  
+@app.route('/enregistrer_client', methods=['GET'])
+def formulaire_client():
+    return render_template('formulaire.html')  # afficher le formulaire
+
                                                                                                                                        
 if __name__ == "__main__":
   app.run(debug=True)
