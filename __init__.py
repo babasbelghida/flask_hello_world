@@ -6,32 +6,15 @@ import sqlite3
                                                                                                                                        
 app = Flask(__name__)                                                                                                                  
 
-@app.route('/fiche_client/<int:post_id>')
-def Readfiche(post_id):
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients WHERE id = ?', (post_id,))
-    data = cursor.fetchall()
-    conn.close()
-    
-    # Rendre le template HTML et transmettre les données
-    return render_template('read_data.html', data=data)
 
-@app.route('/consultation/')
-def ReadBDD():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients;')
-    data = cursor.fetchall()
-    conn.close()
-    
-    # Rendre le template HTML et transmettre les données
-    return render_template('read_data.html', data=data)
-
-@app.route("/rapport/")
-def mongraphique():
-    return render_template("graphique.html")
-
+@app.route("/")
+def hello_world():
+    return render_template('hello.html')
+  
+@app.route("/fr/")
+def monfr():
+    return "<h2>Bonjour tout le monde !</h2>"
+  
 @app.route('/paris/')
 def meteo():
     response = urlopen('https://api.openweathermap.org/data/2.5/forecast/daily?q=Paris,fr&cnt=16&appid=bd5e378503939ddaee76f12ad7a97608')
@@ -44,15 +27,59 @@ def meteo():
         results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results)
 
-@app.route("/fr/")
-def monfr():
-    return "<h2>Bonjour tout le monde !</h2>"
-  
-@app.route('/enregistrer_client', methods=['GET'])
-def formulaire_client():
-    return render_template('formulaire.html')  # afficher le formulaire
 
-                                                                                                                                       
+@app.route("/rapport/")
+def mongraphique():
+    return render_template("graphique.html")
+
+
+@app.route('/consultation/')
+def ReadBDD():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('Select * FROM clients;')
+    data = cursor.fetchall()
+    conn.close()
+    
+    # Rendre le template HTML et transmettre les données
+    return render_template('read_data.html', data=data)
+
+
+@app.route('/fiche_client/<int:post_id>')
+def Readfiche(post_id):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM clients WHERE id = ?', (post_id,))
+    data = cursor.fetchall()
+    conn.close()
+    
+    # Rendre le template HTML et transmettre les données
+    return render_template('read_data.html', data=data)
+  
+@app.route('/recherche_fiche_client/<string:client_name>')
+def Seadfiche(client_name):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM clients WHERE nom LIKE ?", ('%' + client_name + '%',))
+    data = cursor.fetchall()
+    conn.close()
+
+
+   # Rendre le template HTML et transmettre les données
+    return render_template('read_data.html', data=data)
+
+
+@app.route('/enregister_client/')
+def formulaire_client():
+    return render_template('formulaire_client.html')
+
+
+@app.route('/write/', methods=['POST'])
+def write_client():
+    return "Opération de sauvegarde réussie ! C'est par ici"
+
+
+                  
 if __name__ == "__main__":
   app.run(debug=True)
 
