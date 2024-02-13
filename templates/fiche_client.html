@@ -1,25 +1,30 @@
-@app.route('/ajouter_client/', methods=['GET', 'POST'])
-def ajouter_client():
-    if request.method == 'POST':
-        # Récupérer les données du formulaire
-        nom = request.form['nom']
-        prenom = request.form['prenom']
-        adresse = request.form['adresse']
 
-        # Insérer les données dans la base de données (ici, je suppose que tu as une table 'clients')
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)', (nom, prenom, adresse))
-        conn.commit()
-        conn.close()
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un nouveau client</title>
+</head>
+<body>
 
-        # Rediriger vers la page de consultation des clients après l'ajout
-        return redirect(url_for('ReadBDD'))
+    <h2>Ajouter un nouveau client</h2>
 
-    # Si la méthode est GET, simplement rendre le template du formulaire
-    return render_template('ajouter_client.html')
+    <form action="/ajouter_client" method="post">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required><br>
 
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required><br>
 
+        <label for="adresse">Adresse :</label>
+        <input type="text" id="adresse" name="adresse" required><br>
+
+        <input type="submit" value="Ajouter">
+    </form>
+
+</body>
+</html>
 
 
 
