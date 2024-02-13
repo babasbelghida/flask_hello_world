@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un client</title>
-    <!-- Ajoutez ici d'autres balises meta ou liens vers des feuilles de style si nécessaire -->
-</head>
-<body>
-    <h1>Ajouter un nouveau client</h1>
+@app.route('/ajouter_client/', methods=['GET', 'POST'])
+def ajouter_client():
+    if request.method == 'POST':
+        # Récupérer les données du formulaire
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        adresse = request.form['adresse']
 
-    <!-- Formulaire pour ajouter un client -->
-    <form method="POST" action="{{ url_for('ajouter_client') }}">
-        <label for="nom">Nom :</label>
-        <input type="text" name="nom" required>
-        <br>
-        <label for="prenom">Prénom :</label>
-        <input type="text" name="prenom" required>
-        <br>
-        <label for="adresse">Adresse :</label>
-        <input type="text" name="adresse" required>
-        <br>
-        <input type="submit" value="Ajouter le client">
-    </form>
+        # Insérer les données dans la base de données (ici, je suppose que tu as une table 'clients')
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)', (nom, prenom, adresse))
+        conn.commit()
+        conn.close()
 
-    <!-- Ajoutez ici d'autres éléments HTML si nécessaire -->
+        # Rediriger vers la page de consultation des clients après l'ajout
+        return redirect(url_for('ReadBDD'))
 
-</body>
-</html>
-
+    # Si la méthode est GET, simplement rendre le template du formulaire
+    return render_template('ajouter_client.html')
