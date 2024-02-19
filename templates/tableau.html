@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tableau des clients</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+        </tr>
+        {% for client in clients %}
+        <tr>
+            <td>{{ client[0] }}</td>
+            <td>{{ client[1] }}</td>
+            <td>{{ client[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
