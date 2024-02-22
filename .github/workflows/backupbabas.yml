@@ -40,4 +40,4 @@ jobs:
             cd $HOME/www/
             sqlite3 database.db .dump > sauvegarde.sql
             echo "${{ secrets.KEYSSH }}" > key.pem && chmod 600 key.pem
-            scp -v -i "key.pem" sauvegarde.sql ${{ secrets.USERNAMEDIST }}@ssh-${{ secrets.USERNAMEDIST }}.alwaysdata.net:~/www/
+            scp -i "key.pem" sauvegarde.sql ${{ secrets.USERNAMEDIST }}@ssh-${{ secrets.USERNAMEDIST }}.alwaysdata.net:~/www/
